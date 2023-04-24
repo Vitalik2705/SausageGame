@@ -83,6 +83,41 @@ public class Game
         
     }
 
+    // Отримати список найменших не козирних карт гравця
+    // список - тому що він може мати дві "однакові" карти
+    public List<Card> getLowestNonTrumpCards(Player player, Suit trumpSuit)
+    {
+        var nonTrumpCards = player.Hand.Where(card => card.Suit != trumpSuit);
+        
+        if (nonTrumpCards.Count() == 0)
+        {
+            return new List<Card>();
+        }
+        
+        var lowestNonTrumpCard = nonTrumpCards.OrderBy(card => card).First();
+
+        var lowestNonTrumpCards = player.Hand.Where(card => card.Suit != trumpSuit && card.CompareTo(lowestNonTrumpCard) == 0);
+
+        return lowestNonTrumpCards.ToList();
+    }
+    
+    // Отримати список найменшу козирну карту гравця
+    public Card getLowestTrumpCard(Player player, Suit trumpSuit)
+    {
+        var trumpCards = player.Hand.Where(card => card.Suit == trumpSuit);
+        
+        if (trumpCards.Count() == 0)
+        {
+            return null;
+        }
+        
+        var lowestTrumpCard = trumpCards.OrderBy(card => card).First();
+
+        return lowestTrumpCard;
+    }
+
+
+    
     public void PlayGame()
     {
         while (true)
