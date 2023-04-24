@@ -32,3 +32,16 @@ foreach (Player player in players)
     Console.WriteLine(player.Name);
     Console.WriteLine(playerLowestTrumpCard);
 }
+Console.WriteLine("---------Tossing up---------");
+Dictionary<Player, List<Card>> possibleTossesDictionary = game.getPossibleCardForTossingUp(new Card(Suit.Hearts, CardValue.Ten));
+
+foreach (KeyValuePair<Player, List<Card>> kvp in possibleTossesDictionary)
+{
+    Console.WriteLine($"Player: {kvp.Key.Name}");
+    Console.WriteLine("Possible tosses:");
+    foreach (Card card in kvp.Value)
+    {
+        Console.WriteLine(card.ToString());
+    }
+    Console.WriteLine();
+}

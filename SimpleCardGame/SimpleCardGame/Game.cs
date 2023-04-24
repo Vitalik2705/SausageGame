@@ -115,8 +115,20 @@ public class Game
 
         return lowestTrumpCard;
     }
+    
+    // метод, що повертає словник можливих комбінацій для підкидування інших гравців
+    public Dictionary<Player, List<Card>> getPossibleCardForTossingUp(Card thrownCard)
+    {
+        Dictionary<Player, List<Card>> possibleCards = new Dictionary<Player, List<Card>>();
 
+        foreach (Player player in players)
+        {
+            List<Card> playerPossibleCards = player.Hand.Where(card => card.Value == thrownCard.Value && card.Suit != gameTrumpCard.Suit).ToList();
+            possibleCards.Add(player, playerPossibleCards);
+        }
 
+        return possibleCards;
+    }
     
     public void PlayGame()
     {
