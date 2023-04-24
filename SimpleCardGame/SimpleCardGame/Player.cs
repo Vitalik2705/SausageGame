@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace SimpleCardGame;
 
 public class Player
@@ -21,8 +23,39 @@ public class Player
         Hand.Remove(card);
     }
 
-    public void ClearHand()
+    public Card getLowestCard()
     {
-        Hand.Clear();
+        Card lowestCard = Hand[0];
+        for (int i = 1; i < Hand.Count; i++)
+        {
+            if (Hand[i].CompareTo(lowestCard) == 1)
+            {
+                lowestCard = Hand[i];
+            }
+        }
+
+        return lowestCard;
     }
+    
+    public Card getLowestTrumpCard(Suit trumpSuit)
+    {
+        var lowestTrumpCard = Hand.Where(card => card.Suit == trumpSuit)
+            .OrderBy(card => card)
+            .FirstOrDefault();
+
+        return lowestTrumpCard;
+    }
+    
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Player name: {Name}");
+        sb.AppendLine("Cards in hand:");
+        foreach (Card card in Hand)
+        {
+            sb.Append(card.ToString() + " ");
+        }
+        return sb.ToString();
+    }
+
 }

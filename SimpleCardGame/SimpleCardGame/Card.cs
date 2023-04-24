@@ -23,7 +23,7 @@ public enum Suit
     Spades
 }
 
-public class Card
+public class Card: IComparable<Card>
 {
     public Suit Suit { get; }
     public CardValue Value { get; }
@@ -38,4 +38,61 @@ public class Card
     {
         return Value.CompareTo(other.Value);
     }
+    
+    public override string ToString()
+    {
+        string valueString;
+
+        switch (Value)
+        {
+            case CardValue.Two:
+            case CardValue.Three:
+            case CardValue.Four:
+            case CardValue.Five:
+            case CardValue.Six:
+            case CardValue.Seven:
+            case CardValue.Eight:
+            case CardValue.Nine:
+            case CardValue.Ten:
+                valueString = ((int)Value).ToString();
+                break;
+            case CardValue.Jack:
+                valueString = "J";
+                break;
+            case CardValue.Queen:
+                valueString = "Q";
+                break;
+            case CardValue.King:
+                valueString = "K";
+                break;
+            case CardValue.Ace:
+                valueString = "A";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        string suitString;
+
+        switch (Suit)
+        {
+            case Suit.Hearts:
+                suitString = "♥";
+                break;
+            case Suit.Diamonds:
+                suitString = "♦";
+                break;
+            case Suit.Clubs:
+                suitString = "♣";
+                break;
+            case Suit.Spades:
+                suitString = "♠";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        return $"{valueString}{suitString}";
+    }
+
 }
