@@ -1,30 +1,16 @@
-﻿namespace SausageGame;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-public class Deck
+namespace SausageGame
 {
-    private List<Card> cards;
-
-    public Deck()
+    public class Deck
     {
-        cards = new List<Card>();
+        private List<Card> cards;
 
-        foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+        public Deck()
         {
-            foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
-            {
-                cards.Add(new Card(suit, value));
-            }
-        }
-    }
+            cards = new List<Card>();
 
-    public Deck(uint amountOfCards)
-    {
-        cards = new List<Card>();
-        if (amountOfCards == 52)
-        {
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
                 foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
@@ -34,40 +20,53 @@ public class Deck
             }
         }
 
-        if (amountOfCards == 36)
+        public Deck(uint amountOfCards)
         {
-            foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+            cards = new List<Card>();
+            if (amountOfCards == 52)
             {
-                for (int i = (int)CardValue.Six; i <= (int)CardValue.Ace; i++)
+                foreach (Suit suit in Enum.GetValues(typeof(Suit)))
                 {
-                    cards.Add(new Card(suit, (CardValue)i));
+                    foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
+                    {
+                        cards.Add(new Card(suit, value));
+                    }
                 }
-            } 
+            }
+
+            if (amountOfCards == 36)
+            {
+                foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+                {
+                    for (int i = (int)CardValue.Six; i <= (int)CardValue.Ace; i++)
+                    {
+                        cards.Add(new Card(suit, (CardValue)i));
+                    }
+                } 
+            }
         }
-    }
 
-    public void Shuffle()
-    {
-        Random rng = new Random();
-
-        for (int i = cards.Count - 1; i > 0; i--)
+        public void Shuffle()
         {
-            int j = rng.Next(i + 1);
-            Card temp = cards[i];
-            cards[i] = cards[j];
-            cards[j] = temp;
-        }
-    }
+            Random rng = new Random();
 
-    public Card Deal()
-    {
-        if (cards.Count == 0)
+            for (int i = cards.Count - 1; i > 0; i--)
+            {
+                int j = rng.Next(i + 1);
+                (cards[i], cards[j]) = (cards[j], cards[i]);
+            }
+        }
+
+        public Card Deal()
         {
-            return null;
-        }
+            if (cards.Count == 0)
+            {
+                return null;
+            }
 
-        Card card = cards[0];
-        cards.RemoveAt(0);
-        return card;
+            Card card = cards[0];
+            cards.RemoveAt(0);
+            return card;
+        }
     }
 }
