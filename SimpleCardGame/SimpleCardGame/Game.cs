@@ -77,12 +77,7 @@ public class Game
         
         return playerWithLowestCard;
     }
-
-    public void PlayRound()
-    {
-        
-    }
-
+    
     // Отримати список найменших не козирних карт гравця
     // список - тому що він може мати дві "однакові" карти
     public List<Card> getLowestNonTrumpCards(Player player, Suit trumpSuit)
@@ -128,6 +123,18 @@ public class Game
         }
 
         return possibleCards;
+    }
+
+    public Player startGame()
+    {
+        Player playerWhoStarts = getPlayerWithLowestCard();
+        return playerWhoStarts;
+    }
+    
+    public void PlayRound()
+    {
+        
+        
     }
     
     public void PlayGame()
