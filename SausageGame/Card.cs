@@ -1,6 +1,6 @@
-﻿
-using System;
-namespace SausageGame
+﻿using System;
+
+namespace SausageGame1
 {
     public enum CardValue
     {

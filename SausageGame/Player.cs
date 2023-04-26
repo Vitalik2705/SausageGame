@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace SausageGame
+namespace SausageGame1
 {
     public class Player
     {

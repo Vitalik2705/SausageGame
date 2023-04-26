@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace SausageGame
+namespace SausageGame1
 {
-    
     public class Game
     {
         static private Deck deck;
         private List<Player> players;
         private int currentPlayerIndex;
-        private Card gameTrumpCard;
         private List<Card> cardsOnTable;
 
         public Game(List<Player> gamePlayers, uint amountOfCards = 52)
@@ -26,7 +24,6 @@ namespace SausageGame
             }
 
             currentPlayerIndex = 0;
-            gameTrumpCard = deck.Deal();
             cardsOnTable = new List<Card>();
         }
 
@@ -34,18 +31,6 @@ namespace SausageGame
         {
             get => players;
             set => players = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public static Deck Deck
-        {
-            get => deck;
-            set => deck = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public Card GameTrumpCard
-        {
-            get => gameTrumpCard;
-            set => gameTrumpCard = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public void DealCards(int numCards)
@@ -77,7 +62,7 @@ namespace SausageGame
                 player.RemoveCardFromHand(cardToTable);
                 Console.WriteLine($"{player.Name} played {cardToTable}");
 
-                if (cardsOnTable.Any(card => card.Value == cardToTable.Value))
+                if (cardsOnTable.Any(card => card.Value == cardToTable.Value && card.Suit != cardToTable.Suit))
                 {
                     int index = cardsOnTable.FindIndex(card => card.Value == cardToTable.Value);
                     List<Card> takenCards = cardsOnTable.GetRange(index, cardsOnTable.Count - index);
@@ -89,6 +74,7 @@ namespace SausageGame
                 if (player.Hand.Count == 0)
                 {
                     Console.WriteLine($"Player {player.Name} has no more cards and loses the game.");
+                    players.Remove(player);
                     roundOver = true;
                     break;
                 }
@@ -103,7 +89,7 @@ namespace SausageGame
         {
             foreach (Player player in players)
             {
-                if (player.Hand.Count == 0)
+                if (players.Count == 1)
                 {
                     Console.WriteLine($"Player {player.Name} has won the game!");
                     return true;
@@ -124,8 +110,7 @@ namespace SausageGame
                 }
                 if (roundOver)
                 {
-                    Thread.Sleep(2000);
-                    Console.WriteLine("Starting a new round...");
+                    Thread.Sleep(3000);
                 }
             }
         }

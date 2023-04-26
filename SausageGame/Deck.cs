@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SausageGame
+namespace SausageGame1
 {
     public class Deck
     {
